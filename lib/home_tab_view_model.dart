@@ -3,13 +3,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tab_view_sample/home_use_case.dart';
 
 final homeTabViewModelNotifierProvider =
-    ChangeNotifierProvider((ref) => HomeTabViewModel(ref.read));
+    ChangeNotifierProvider.family<HomeTabViewModel, int>(
+        (ref, id) => HomeTabViewModel(ref.read, id));
 
 class HomeTabViewModel extends ChangeNotifier {
   final Reader _reader;
+  final int index;
   late final HomeUseCase _homeUseCase = _reader(homeUseCaseProvider);
 
-  HomeTabViewModel(this._reader);
+  HomeTabViewModel(this._reader, this.index);
 
   List<String>? _list;
 
